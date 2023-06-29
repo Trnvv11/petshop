@@ -4,7 +4,9 @@
 
     $querykategori = mysqli_query($con, "SELECT * FROM kategori");
     $jumlahkategori = mysqli_num_rows($querykategori);
-    echo $jumlahkategori;
+    
+    $queryProduk = mysqli_query($con, "SELECT * FROM produk");
+    $jumlahProduk = mysqli_num_rows($queryProduk);  
 ?>
 <html lang-"en">
     <head> 
@@ -12,7 +14,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> Home </title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- Link Font Awesome -->
@@ -56,7 +57,7 @@
                     </div>
                     <div class="col-6 text-white">
                         <h3 class="fs-2"> Kategori </h3>
-                        <p class="fs-4"> 4 Kategori" </p>
+                        <p class="fs-4"><?php echo $jumlahkategori; ?> Kategori</p>
                         <p><a href="kategori.php" class="text-white no-decoretion"> Lihat Detail </a></p>
                     </div>
                 </div>
@@ -71,7 +72,7 @@
                     </div>
                     <div class="col-6 text-white">
                         <h3 class="fs-2"> Produk </h3>
-                        <p class="fs-4"> 20 Produk" </p>
+                        <p class="fs-4"><?php echo $jumlahProduk; ?> Produk</p>
                         <p><a href="produk.php" class="text-white no-decoretion"> Lihat Detail </a></p>
                     </div>
                 </div>
