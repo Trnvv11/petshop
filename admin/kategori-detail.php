@@ -23,14 +23,75 @@
 <body>
     <?php require "navbar.php";?>
 
-    <div class="container">
+    <div class="container mt-5">
     <h2>Detail Kategori</h2>
 
-        <div>
+        <div class="col-12 col-md-6">
             <form action="" method="post">
-                <label for="kategori">Kategori</label>
-                <input type="text" name="kategori" id="kategori" class="form-control" value="<?php echo $data['nama']; ?>">
+                <div>
+                    <label for="kategori">Kategori</label>
+                    <input type="text" name="kategori" id="kategori" class="form-control" value="<?php echo $data['nama']; ?>">
+                </div>
+
+                <div class="mt-3 d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary" name="editBtn">Edit</button>
+                    <button type="submit" class="btn btn-danger" name="deleteBtn">Delete</button>
+                </div>
             </form>
+
+            <?php
+                if(isset($_POST['editBtn'])){
+                    $kategori = htmlspecialchars($_POST['kategori']);
+
+                    if($data['nama'] == $kategori){
+                        ?>
+                            <meta http-equiv="refresh" content="0; url=kategori.php" />
+                        <?php
+                    }
+                    else{
+                        $query = mysqli_query($con, "SELECT * FROM kategori WHERE nama='$kategori'");
+                        $jumlahData = mysqli_num_rows($query);
+
+                        if($jumlahData > 0){
+                            ?>
+                            <div class="alert alert-warning mt-3" role="alert">
+                                Kategori sudah tersedia
+                            </div>
+                            <?php
+                        }
+                        else{
+                            $querySimpan = mysqli_query($con, "UPDATE kategori SET nama='$kategori' WHERE id='$id'");
+                            if($querySimpan){
+                                ?>
+                                <div class="alert alert-primary mt-3" role="alert">
+                                Kategori di Update
+                                </div>
+    
+                                <meta http-equiv="refresh" content="1; url=kategori.php" />
+                                <?php
+                            }
+                            else{
+                                echo mysqli_error($con);
+                            }
+                        }
+                    }
+                }
+                if(isset($_POST['deleteBtn'])){
+                    $queryDelete = mysqli_query($con, "DELETE FROM kategori WHERE id='$id'");
+                    if($queryDelete){
+                        ?>
+                        <div class="alert alert-primary mt-3" role="alert">
+                        Kategori Dihapus
+                        </div>
+
+                        <meta http-equiv="refresh" content="1; url=kategori.php" />
+                        <?php
+                    }
+                    else{
+                        echo mysqli_error($con);
+                    }
+                }
+            ?>
         </div>
     </div>
     
