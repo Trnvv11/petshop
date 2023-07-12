@@ -2,10 +2,21 @@
     require "session.php";
     require "../koneksi.php";
 
-    $query = mysqli_query($con, "SELECT * FROM produk");
+    $query = mysqli_query($con, "SELECT a.*, b.nama AS nama_kategori FROM produk a JOIN kategori b ON a.kategori_id=b.id");
     $jumlahProduk = mysqli_num_rows($query);
 
     $queryKategori = mysqli_query($con, "SELECT * FROM kategori");
+
+    //generate name file
+    function generateRandomString($lenght = 10){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLenght = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 10; $i++) {
+            $randomString .= $characters[rand(0, $charactersLenght - 1)];
+        }
+        return $randomString;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +54,7 @@
             </nav>
 
             <div class="my-3 col-12 col-md-6">
-                <h4>Tambah Kategori</h4>
+                <h4>Tambah Produk</h4>
 
                 <form action="" method="post" enctype="multipart/form-data">
                     <div>
@@ -86,9 +97,75 @@
                         <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                     </div>
                 </form>
+
+                <?php
+                    if(isset($_POST['simpan'])){
+                        $nama = htmlspecialchars($_POST['nama']);
+                        $kategori = htmlspecialchars($_POST['kategori']);
+                        $harga = htmlspecialchars($_POST['harga']);
+                        $detail = htmlspecialchars($_POST['detail']);
+                        $Ketersediaan_stok = htmlspecialchars($_POST['ketersediaan_stok']);
+
+                        //penyimpanan foto
+                        $target_dir = "../image/";
+                        $nama_file = basename($_FILES["foto"]["name"]);
+                        $target_file = $target_dir . $nama_file;
+                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                        $image_size = $_FILES["foto"]["size"];
+                        $random_name = generateRandomString(20);
+                        $new_name = $random_name . "." . $imageFileType;
+
+                        if($nama=='' || $kategori=='' || $harga==''){
+                ?>
+                            <div class="alert alert-warning mt-3" role="alert">
+                                Nama, Kategori dan Harga wajib diisi
+                            </div>
+                <?php            
+                        }
+                        else{
+                            if($nama_file!=''){
+                                if($image_size > 500000){
+                ?>
+                                    <div class="alert alert-warning mt-3" role="alert">
+                                        Foto tidak boleh lebih dari 500 kb
+                                    </div>
+                <?php                    
+                                }
+                                else{
+                                    if($imageFileType != 'jpg' && $imageFileType != 'png'){
+                ?>
+                                    <div class="alert alert-warning mt-3" role="alert">
+                                        File foto wajib .jpg atau .png
+                                    </div>
+                <?php                        
+                                    }
+                                    else{
+                                        move_uploaded_file($_FILES["foto"]["tmp_name"], $target_dir . $new_name);
+                                    }
+                                }
+                            }
+
+                            //query insert to produk table
+                            $queryTambah = mysqli_query($con, "INSERT INTO produk (kategori_id, nama, harga, foto, detail, ketersediaan_stok) VALUES ('$kategori', '$nama', '$harga', '$new_name', '$detail', '$Ketersediaan_stok')");
+
+                            if(queryTambah){
+                ?>
+                            <div class="alert alert-warning mt-3" role="alert">
+                                Produk berhasil tersimpan
+                            </div>
+
+                            <meta http-equiv="refresh" content="1; url=produk.php" />
+                <?php
+                            }
+                            else{
+                                echo mysqli_eror($con);
+                            }
+                        }
+                    }
+                ?>
             </div>
 
-            <div class="mt-3">
+            <div class="mt-5 mb-5">
                 <h2>List Produk</h2>
 
                 <div class="table-responsive">
@@ -100,6 +177,7 @@
                                 <th>Kategori</th>
                                 <th>Harga</th>
                                 <th>Ketersediaan Stok</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -107,7 +185,7 @@
                                 if($jumlahProduk==0){
                             ?>
                                 <tr>
-                                    <td colspan=5 class="text-center">Data produk tidak ada</td>
+                                    <td colspan=6 class="text-center">Data produk tidak ada</td>
                                 </tr>
                             <?php
                                 }
@@ -118,11 +196,15 @@
                                     <tr>
                                         <td><?php echo $jumlah;?></td>
                                         <td><?php echo $data['nama'];?></td>
-                                        <td><?php echo $data['kategori_id'];?></td>
+                                        <td><?php echo $data['nama_kategori'];?></td>
                                         <td><?php echo $data['harga'];?></td>
                                         <td><?php echo $data['ketersediaan_stok'];?></td>
+                                        <td>
+                                            <a href="produk-detail.php?e=<?php echo $data['id']; ?>" class="btn btn-info"><i class="fas fa-search"></i></a> 
+                                        </td>
                                     </tr>
                             <?php
+                            $jumlah++;
                                     }
                                 }
                             ?>
