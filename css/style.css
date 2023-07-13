@@ -1,0 +1,20 @@
+.warna1{
+    background-color: #78C1F3;
+}
+
+.warna2{
+    background-color: #9BE8D8;
+}
+
+.warna3{
+    background-color: #E2F6CA;
+}
+
+.warna4{
+    background-color: #F8FDCF;
+}
+
+.banner{
+    height: 80vh;
+    background: linear-gradient(rgba(0,0,0,0.4),(rgba(0,0,0,0.4))) url('../image/banner.jpg');
+}
