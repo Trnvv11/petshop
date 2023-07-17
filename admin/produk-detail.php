@@ -13,7 +13,7 @@
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLenght = strlen($characters);
         $randomString = '';
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLenght - 1)];
         }
         return $randomString;
@@ -33,11 +33,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
-    <style>
-        form div{
-            margin-bottom: 10px;
-        }
-    </style>
+<style>
+    form div{
+        margin-bottom: 10px;
+    }
+</style>
 
 <body>
     <?php require "navbar.php";?>
@@ -64,42 +64,40 @@
                         ?>
                     </select>
                 </div>
-                    <div>
-                        <label for="harga">Harga</label>
-                        <input type="number" class="form-control" value="<?php echo $data['harga']; ?>" name="harga" required>
-                    </div>
-                    <div>
-                        <label for="curentFoto">Foto Produk : </label>
-                        <img src="../image/<?php echo $data['foto'] ?>" alt="" width="300px">
-                    </div>
-                    <div>
-                        <label for="foto">Ganti Foto</label>
-                        <input type="file" name="foto" id="foto" class="form-control">
-                    </div>
-                    <div>
-                        <label for="detail">Detail</label>
-                        <textarea name="detail" id="detail" cols="30" rows="5" class="form-control">
-                            <?php echo $data['detail']; ?>
-                        </textarea>
-                    </div>
-                    <div>
-                        <label for="ketersediaan_stok">Ketersediaan Stok</label>
-                        <select name="ketersediaan_stok" id="ketersediaan_stok" class="form-control">
-                            <option value="<?php echo $data['ketersediaan_stok'];?>"><?php echo $data['ketersediaan_stok'];?></option>
-                            <?php
-                                if($data['ketersediaan_stok']=='tersedia'){
-                            ?>
-                                <option value="habis">Habis</option>
-                            <?php        
-                                }
-                                else{
-                            ?>
-                                <option value="tersedia">Tersedia</option>
-                            <?php        
-                                }
-                            ?>
-                        </select>
-                    </div>
+                <div>
+                    <label for="harga">Harga</label>
+                    <input type="number" class="form-control" value="<?php echo $data['harga']; ?>" name="harga" required>
+                </div>
+                <div>
+                    <label for="currentFoto">Foto Produk :</label>
+                    <img src="../image/<?php echo $data['foto'] ?>" alt="" width="300px">
+                </div>
+                <div>
+                    <label for="foto">Ganti Foto</label>
+                    <input type="file" name="foto" id="foto" class="form-control">
+                </div>
+                <div>
+                    <label for="detail">Detail</label>
+                    <textarea name="detail" id="detail" cols="30" rows="5" class="form-control"><?php echo $data['detail']; ?></textarea>
+                </div>
+                <div>
+                    <label for="ketersediaan_stok">Ketersediaan Stok</label>
+                    <select name="ketersediaan_stok" id="ketersediaan_stok" class="form-control">
+                        <option value="<?php echo $data['ketersediaan_stok'];?>"><?php echo $data['ketersediaan_stok'];?></option>
+                        <?php
+                            if($data['ketersediaan_stok']=='tersedia'){
+                        ?>
+                            <option value="habis">Habis</option>
+                        <?php        
+                            }
+                            else{
+                        ?>
+                            <option value="tersedia">Tersedia</option>
+                        <?php        
+                            }
+                        ?>
+                    </select>
+                </div>
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
                     <button type="submit" class="btn btn-danger" name="delete">Delete</button>
@@ -112,9 +110,9 @@
                     $kategori = htmlspecialchars($_POST['kategori']);
                     $harga = htmlspecialchars($_POST['harga']);
                     $detail = htmlspecialchars($_POST['detail']);
-                    $Ketersediaan_stok = htmlspecialchars($_POST['ketersediaan_stok']);
+                    $ketersediaan_stok = htmlspecialchars($_POST['ketersediaan_stok']);
 
-                     if($nama=='' || $kategori=='' || $harga==''){
+                    if($nama=='' || $kategori=='' || $harga==''){
             ?>
                         <div class="alert alert-warning mt-3" role="alert">
                             Nama, Kategori, dan Harga wajib diisi
