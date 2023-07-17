@@ -114,57 +114,61 @@
                     $detail = htmlspecialchars($_POST['detail']);
                     $Ketersediaan_stok = htmlspecialchars($_POST['ketersediaan_stok']);
 
-                    $target_dir = "../image/";
-                    $nama_file = basename($_FILES["foto"]["name"]);
-                    $target_file = $target_dir . $nama_file;
-                    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-                    $image_size = $_FILES["foto"]["size"];
-                    $random_name = generateRandomString(20);
-                    $new_name = $random_name . "." . $imageFileType;
-
-                    if($nama=='' || $kategori=='' || $harga==''){
+                     if($nama=='' || $kategori=='' || $harga==''){
             ?>
                         <div class="alert alert-warning mt-3" role="alert">
-                            Nama, Kategori dan Harga wajib diisi
+                            Nama, Kategori, dan Harga wajib diisi
                         </div>
             <?php
                     }
                     else{
-                        $queryUpdate = mysqli_query($con, "UPDATE produk SET kategori_id='$kategori', nama='$nama', harga='$harga', detail='$detail', ketersediaan_stok='$Ketersediaan_stok' WHERE id='$id'");
+                        // Pembaruan informasi produk
+                        $queryUpdate = mysqli_query($con, "UPDATE produk SET kategori_id='$kategori', nama='$nama', harga='$harga', detail='$detail', ketersediaan_stok='$ketersediaan_stok' WHERE id='$id'");
+                        
+                        if($queryUpdate){
+                            // Proses pembaruan foto
+                            if(isset($_FILES["foto"]["name"]) && $_FILES["foto"]["name"] !== ''){
+                                $target_dir = "../image/";
+                                $nama_file = basename($_FILES["foto"]["name"]);
+                                $target_file = $target_dir . $nama_file;
+                                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                                $image_size = $_FILES["foto"]["size"];
+                                $random_name = generateRandomString(20);
+                                $new_name = $random_name . "." . $imageFileType;
 
-                        if($nama_file==''){
-                            if($image_size > 500000){
+                                // Validasi file foto
+                                if($image_size > 500000){
             ?>
-                                <div class="alert alert-warning mt-3" role="alert">
-                                    Foto tidak boleh lebih dari 500 kb
-                                </div>
-            <?php       
-                            }
-                            else{
-                                if($imageFileType != 'jpg' && $imageFileType != 'png'){
+                                    <div class="alert alert-warning mt-3" role="alert">
+                                        Foto tidak boleh lebih dari 500 kb
+                                    </div>
+            <?php
+                                }
+                                elseif($imageFileType != 'jpg' && $imageFileType != 'png'){
             ?>
                                     <div class="alert alert-warning mt-3" role="alert">
                                         File foto wajib .jpg atau .png
                                     </div>
-            <?php                        
+            <?php
                                 }
                                 else{
                                     move_uploaded_file($_FILES["foto"]["tmp_name"], $target_dir . $new_name);
-                                
-                                    $queryUpdate = mysqli_query($con, "UPDATE produk SET foto='$new_name' WHERE id='$id'");
 
-                                    if($queryUpdate){
-                                        echo mysqli_eror($con);
-            ?>
-                                        <div class="alert alert-warning mt-3" role="alert">
-                                            Produk berhasil update
+                                    $queryUpdateFoto = mysqli_query($con, "UPDATE produk SET foto='$new_name' WHERE id='$id'");
+
+                                    if ($queryUpdateFoto) {
+                                        ?>
+                                        <div class="alert alert-success mt-3" role="alert">
+                                            Foto berhasil diperbarui.
                                         </div>
-                                        
                                         <meta http-equiv="refresh" content="1; url=produk.php" />
-            <?php
-                                    }
-                                    else{
-                                        echo mysqli_error($con);
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <div class="alert alert-danger mt-3" role="alert">
+                                            Gagal memperbarui foto. <?php echo mysqli_error($con); ?>
+                                        </div>
+                                        <?php
                                     }
                                 }
                             }
