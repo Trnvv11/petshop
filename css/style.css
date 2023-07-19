@@ -1,20 +1,111 @@
 .warna1{
-    background-color: #78C1F3;
+    background-color: #8D7B68;
 }
 
 .warna2{
-    background-color: #9BE8D8;
+    background-color: #A4907C;
 }
 
 .warna3{
-    background-color: #E2F6CA;
+    background-color: #C8B6A6;
 }
 
 .warna4{
-    background-color: #F8FDCF;
+    background-color: #F1DEC9;
 }
 
 .banner{
-    height: 80vh;
-    background: linear-gradient(rgba(0,0,0,0.4),(rgba(0,0,0,0.4))) url('../image/banner.jpg');
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('../image/Banner2.png');
+}
+
+.banner-produk{
+    height: 30vh;
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('../image/Banner2.png');
+}
+
+.kategori-utama{
+    height: 250px;
+}
+
+.kategori-food{
+    background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('../image/food.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.kategori-acc{
+    background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('../image/acc.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.kategori-obat{
+    background: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('../image/obat.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.no-decoration{
+    text-decoration: none;
+    color: white;
+}
+
+.no-decoration:hover{
+    color: #C8B6A6;
+}
+
+.image-box {
+    height: 200px;
+}
+
+.image-box img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.text-harga{
+    font-size: 17px;
+    color: #C8B6A6;
+}
+
+/* Membuat flex container dan mengatur overflow-x agar dapat discroll horizontal */
+.produk-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Untuk dukungan smooth scrolling di beberapa perangkat */
+}
+
+/* Mengatur jarak antar produk card */
+.produk-container .col-sm-6 {
+    margin-right: 15px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.card-title {
+    margin-bottom: 10px;
+}
+
+.card-text:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.btn-container {
+    margin-top: auto;
 }
