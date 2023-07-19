@@ -29,11 +29,12 @@
                 <div class="col-md-5">
                     <img src="image/<?php echo $produk['foto']; ?>" class="w-100" alt="">
                 </div>
-                <div class="col-md-6 offset-md-1">
+                <div class="col-lg-6 offset-lg-1">
                     <h1><?php echo $produk['nama']; ?></h1>
                     <p class="fs-5"><?php echo $produk['detail']; ?></p>
                     <p class="fs-5 text-warning">Rp. <?php echo $produk['harga']; ?></p>
                     <p class="fs-5">Ketersediaan : <strong><?php echo $produk['ketersediaan_stok']; ?></strong></p>
+                    <a href="https://wa.me/085329072937" class="btn warna3 text-white">Pesan</a>
                 </div>
             </div>
         </div>
@@ -44,13 +45,13 @@
         <div class="container text-center">
             <h4 class="text-white">Temui Kami</h4>
             <div class="row justify-content-center">
-                <div class="col-sm-1 d-flex justify-content-end mt-2 mb-2"> 
+                <div class="col-4 col-sm-2 mt-2 mb-2">
                     <a href="https://facebook.com" class="text-light"><i class="fab fa-facebook fs-4"></i></a>
                 </div>
-                <div class="col-sm-2 d-flex justify-content-center mt-2 mb-2">
-                    <a href="https://whatsapp.com" class="text-light"><i class="fab fa-whatsapp fs-4"></i></a> 
+                <div class="col-4 col-sm-2 mt-2 mb-2">
+                    <a href="https://whatsapp.com" class="text-light"><i class="fab fa-whatsapp fs-4"></i></a>
                 </div>
-                <div class="col-sm-1 d-flex justify-content-start mt-2 mb-2">
+                <div class="col-4 col-sm-2 mt-2 mb-2">
                     <a href="https://instagram.com" class="text-light"><i class="fab fa-instagram fs-4"></i></a>
                 </div>
             </div>
